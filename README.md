@@ -1,4 +1,4 @@
-# Quiz Sorter for TAs 📊
+# Quiz Sorter for TAs
 
 A professional tool for organizing Wayground quiz data with attendance tracking, designed specifically for Teaching Assistants.
 
@@ -12,7 +12,7 @@ A professional tool for organizing Wayground quiz data with attendance tracking,
 - **Multi-quiz merge**: Import files with multiple quiz columns (e.g., Quiz 1–5). All columns are merged into the period MASTER without overwriting others.
 - **Period MASTER files**: Each period keeps a MASTER CSV that accumulates all quizzes.
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 Quiz Sorter Program/
@@ -25,7 +25,7 @@ Quiz Sorter Program/
 └── README.md              # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Install Dependencies:**
    ```bash
@@ -76,7 +76,7 @@ represent the same quiz, the app merges each cell using the retake rule:
 - If both are numbers, the higher number wins.
 - If the new value is X, the existing value remains.
 
-## 📋 Features
+## Features
 
 - ✅ **Smart Name Matching**: Handles partial names (e.g., "Bob V" → "Bob Vance")
 - ✅ **Attendance Integration**: Adds absent students with X marks
@@ -88,7 +88,7 @@ represent the same quiz, the app merges each cell using the retake rule:
 - ✅ **Configurable Grading**: Apply curve caps and normalize scores
 - ✅ **Period Management**: Separate master files for different class periods
 
-## 🎯 Perfect for:
+## Perfect For
 - Marine Biology TAs (and other subjects!)
 - Wayground quiz data processing
 - Attendance tracking
@@ -96,7 +96,7 @@ represent the same quiz, the app merges each cell using the retake rule:
 - Print-ready output for manual grading
 - Managing multiple quiz attempts and retakes
 
-## 📝 File Formats
+## File Formats
 
 ### Quiz Data CSV Format:
 ```
@@ -129,14 +129,14 @@ The MASTER will be saved as `{Period}_MASTER.csv` in the working directory.
 
 ## Quick Manual Test Plan
 
-1) **UI**: Launch the app. Confirm the green button shows "🚀 Process Quiz Data" in all states.
+1) **UI**: Launch the app. Confirm the green button shows "Process Quiz Data" in all states.
 2) **Multi-Column**: Import a quiz with columns `Quiz 1 (/10)` to `Quiz 5 (/10)` and verify MASTER adds all 5.
 3) **Curve Cap**: Toggle curve cap to 8; re-import the same quiz. Confirm no value exceeds 8.
 4) **Retakes**: Create a retake CSV where 3 students have higher scores in `Quiz 3 (/10)`. Import it. Confirm only those 3 increase.
 5) **Periods**: Rename the attendance to include a new period string like `period 7`, import a quiz, and confirm a new `Period_7_MASTER.csv` is created.
 6) **PDF**: Open the PDF and verify names are canonical, sorted by last, and X cells render bold-centered.
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 - **PDF won't open**: Make sure you have a PDF viewer installed
 - **Import errors**: Run `pip3 install -r requirements.txt`
@@ -144,6 +144,6 @@ The MASTER will be saved as `{Period}_MASTER.csv` in the working directory.
 - **Button text issues on macOS**: The app now uses enhanced styling to ensure visibility
 - **Multi-column imports**: Ensure quiz columns are named like `Quiz 1 (/10)`, `Quiz 2 (/10)`, etc.
 
-## 📞 Support
+## Support
 
-This tool was designed specifically for TA workflow optimization. Enjoy your organized grading! 🎓
+This tool was designed specifically for TA workflow optimization. Enjoy your organized grading!
