@@ -2,15 +2,19 @@
 
 A professional tool for organizing Wayground quiz data with attendance tracking, designed specifically for Teaching Assistants.
 
-## What's New
+## Overview
 
-- **Canonical names everywhere**: Output uses `Last, Middle, First (Nick) #ID` based on attendance.
-- **Sorted output**: CSV and PDF are sorted by last name.
-- **Full roster**: All students appear in the output. Missing scores render as **X** (bold in PDF).
-- **Configurable curve cap**: Toggle on/off and set the cap (e.g., 10, 9, 8). Scores are capped at `min(score, cap)`.
-- **Retakes support**: Importing a quiz again only **raises** a student's score (or replaces **X**); other students' scores remain intact.
-- **Multi-quiz merge**: Import files with multiple quiz columns (e.g., Quiz 1–5). All columns are merged into the period MASTER without overwriting others.
-- **Period MASTER files**: Each period keeps a MASTER CSV that accumulates all quizzes.
+This application streamlines the quiz grading workflow by automatically processing quiz data, matching student names, integrating attendance records, and generating professional PDF output. It supports multiple quizzes, retakes, configurable grading curves, and maintains separate master files for each class period.
+
+## Key Features
+
+- **Canonical Name Formatting** - Output uses standardized format: `Last, Middle, First (Nick) #ID` based on attendance records
+- **Sorted Output** - CSV and PDF files are automatically sorted by last name
+- **Complete Roster** - All students appear in output; missing scores render as **X** (bold in PDF)
+- **Configurable Curve Cap** - Toggle on/off and set maximum points (e.g., 10, 9, 8). Scores are capped at `min(score, cap)`
+- **Retake Support** - Importing a quiz again only raises a student's score (or replaces **X**); other students' scores remain intact
+- **Multi-Quiz Merge** - Import files with multiple quiz columns (e.g., Quiz 1–5). All columns are merged into the period MASTER without overwriting others
+- **Period Management** - Each period maintains a separate MASTER CSV that accumulates all quizzes
 
 ## Folder Structure
 
@@ -58,41 +62,42 @@ Quiz Sorter Program/
    - Save your selected output CSV
    - Generate a print-ready PDF
 
-## Retakes
+## Retake Processing
 
 To process retakes, import a CSV with the same quiz column name (e.g., `Quiz 3 (/10)`).
-For each student:
-- If the existing score is **X**, the new score replaces it.
-- If both are numbers, the higher value wins.
-- Other students are unaffected.
 
-### Header de-duplication
+**Retake Rules:**
+- If the existing score is **X**, the new score replaces it
+- If both are numbers, the higher value is preserved
+- Other students' scores remain unaffected
 
-Some Google Sheets exports include extra headers such as `Quiz Values - Sheet(1) (/10)` in addition
-to standard headers like `Quiz 1 (/10)`. The importer now normalizes headers to canonical names
-(e.g., `Quiz 1 (/10)`) and folds duplicates into a single column. When folding multiple columns that
-represent the same quiz, the app merges each cell using the retake rule:
-- If the existing value is X and the new value is a number, the number wins.
-- If both are numbers, the higher number wins.
-- If the new value is X, the existing value remains.
+### Header De-duplication
+
+Some Google Sheets exports include extra headers such as `Quiz Values - Sheet(1) (/10)` in addition to standard headers like `Quiz 1 (/10)`. The importer normalizes headers to canonical names (e.g., `Quiz 1 (/10)`) and consolidates duplicates into a single column.
+
+**When consolidating multiple columns representing the same quiz:**
+- If the existing value is X and the new value is a number, the number is used
+- If both are numbers, the higher number is preserved
+- If the new value is X, the existing value remains unchanged
 
 ## Features
 
-- ✅ **Smart Name Matching**: Handles partial names (e.g., "Bob V" → "Bob Vance")
-- ✅ **Attendance Integration**: Adds absent students with X marks
-- ✅ **Alphabetical Sorting**: Sorts by last name, first name
-- ✅ **Professional PDF**: Print-ready with highlighting for absent students
-- ✅ **Auto-Open**: PDF opens automatically after processing
-- ✅ **Smart Retakes**: Preserve higher scores when importing retakes
-- ✅ **Multi-Column Support**: Handle quiz files with multiple quiz columns
-- ✅ **Configurable Grading**: Apply curve caps and normalize scores
-- ✅ **Period Management**: Separate master files for different class periods
+- **Smart Name Matching** - Handles partial names (e.g., "Bob V" → "Bob Vance")
+- **Attendance Integration** - Automatically adds absent students with X marks
+- **Alphabetical Sorting** - Sorts by last name, then first name
+- **Professional PDF Output** - Print-ready format with highlighting for absent students
+- **Auto-Open PDF** - Automatically opens PDF after processing completes
+- **Smart Retakes** - Preserves higher scores when importing retakes
+- **Multi-Column Support** - Handles quiz files with multiple quiz columns simultaneously
+- **Configurable Grading** - Apply curve caps and normalize scores
+- **Period Management** - Separate master files for different class periods
 
-## Perfect For
-- Marine Biology TAs (and other subjects!)
+## Use Cases
+
+- Teaching Assistants across all subjects
 - Wayground quiz data processing
-- Attendance tracking
-- Grade sheet creation
+- Attendance tracking and integration
+- Professional grade sheet creation
 - Print-ready output for manual grading
 - Managing multiple quiz attempts and retakes
 
@@ -127,23 +132,31 @@ The app tries to infer the **Period** from either the file name or the folder:
 
 The MASTER will be saved as `{Period}_MASTER.csv` in the working directory.
 
-## Quick Manual Test Plan
+## Testing Guide
 
-1) **UI**: Launch the app. Confirm the green button shows "Process Quiz Data" in all states.
-2) **Multi-Column**: Import a quiz with columns `Quiz 1 (/10)` to `Quiz 5 (/10)` and verify MASTER adds all 5.
-3) **Curve Cap**: Toggle curve cap to 8; re-import the same quiz. Confirm no value exceeds 8.
-4) **Retakes**: Create a retake CSV where 3 students have higher scores in `Quiz 3 (/10)`. Import it. Confirm only those 3 increase.
-5) **Periods**: Rename the attendance to include a new period string like `period 7`, import a quiz, and confirm a new `Period_7_MASTER.csv` is created.
-6) **PDF**: Open the PDF and verify names are canonical, sorted by last, and X cells render bold-centered.
+### Quick Manual Test Plan
+
+1. **UI Verification** - Launch the application and confirm the button displays "Process Quiz Data" in all states
+2. **Multi-Column Import** - Import a quiz with columns `Quiz 1 (/10)` through `Quiz 5 (/10)` and verify MASTER adds all 5 columns
+3. **Curve Cap** - Toggle curve cap to 8 and re-import the same quiz; confirm no value exceeds 8
+4. **Retakes** - Create a retake CSV where 3 students have higher scores in `Quiz 3 (/10)`. Import and verify only those 3 scores increase
+5. **Period Management** - Rename the attendance file to include a period string like `period_7`, import a quiz, and confirm a new `Period_7_MASTER.csv` is created
+6. **PDF Output** - Open the generated PDF and verify names are in canonical format, sorted by last name, and X cells render bold and centered
 
 ## Troubleshooting
 
-- **PDF won't open**: Make sure you have a PDF viewer installed
-- **Import errors**: Run `pip3 install -r requirements.txt`
-- **File not found**: Check that files are in the correct folders
-- **Button text issues on macOS**: The app now uses enhanced styling to ensure visibility
-- **Multi-column imports**: Ensure quiz columns are named like `Quiz 1 (/10)`, `Quiz 2 (/10)`, etc.
+**Common Issues and Solutions:**
+
+- **PDF won't open** - Ensure you have a PDF viewer installed on your system
+- **Import errors** - Run `pip3 install -r requirements.txt` to install all required dependencies
+- **File not found** - Verify that files are placed in the correct folders (`input/` for quiz data, `attendance/` for attendance lists)
+- **Button text visibility on macOS** - The application uses enhanced styling to ensure button text is visible
+- **Multi-column imports** - Ensure quiz columns are named following the format: `Quiz 1 (/10)`, `Quiz 2 (/10)`, etc.
 
 ## Support
 
-This tool was designed specifically for TA workflow optimization. Enjoy your organized grading!
+This tool was designed specifically for Teaching Assistant workflow optimization. For questions, issues, or feature requests, please open an issue on the GitHub repository.
+
+---
+
+**Designed for efficiency. Built for educators.**
